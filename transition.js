@@ -20,7 +20,7 @@
   tx.id = "tx";
   tx.setAttribute("role", "status");
   tx.setAttribute("aria-label", "Loading");
-  tx.innerHTML = "<b>Mark Paulo Realin</b><i></i>";
+  tx.innerHTML = "<b>Loading...</b><i></i>";
   document.documentElement.appendChild(tx);
 
   function reveal() {
