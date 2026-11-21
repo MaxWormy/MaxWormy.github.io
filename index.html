@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mark Paulo Realin | Game Developer Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:dark;
+  --ink:#060b24; --navy:#0b1338; --panel:#121c4d; --line:#22317d;
+  --banner:#1d33bf; --violet:#6d5bf7; --cyan:#5cd6ff;
+  --ice:#e8eeff; --muted:#a3b3e6;
+  --vn:#c792ff; --rpg:#ffb86b; --simple:#6fd3ff;
+  --display:"Bricolage Grotesque","Segoe UI",system-ui,sans-serif;
+  --body:"Figtree","Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth;scroll-padding-top:64px}
+body{background:var(--ink);color:var(--ice);font:400 .95rem/1.6 var(--body)}
+a{color:inherit}
+:focus-visible{outline:3px solid var(--cyan);outline-offset:3px;border-radius:6px}
+.wrap{max-width:1000px;margin:0 auto;padding:0 20px}
+
+/* quick nav, appears after scrolling past the banner */
+header{position:fixed;top:0;left:0;right:0;z-index:5;background:var(--ink);border-bottom:1px solid var(--line);
+  transform:translateY(-100%);visibility:hidden;transition:transform .2s,visibility .2s}
+header.on{transform:none;visibility:visible}
+header .wrap,.bn{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+header .wrap{min-height:54px}
+.logo{font:800 1.1rem var(--display);text-decoration:none;letter-spacing:-.01em}
+nav{display:flex;gap:2px;flex-wrap:wrap}
+nav a{text-decoration:none;color:var(--muted);padding:5px 12px;border-radius:999px;font-weight:500;font-size:.9rem}
+nav a:hover{color:#fff;background:rgba(255,255,255,.12)}
+
+/* banner */
+.hero{padding:14px 0 6px}
+.banner{position:relative;overflow:hidden;background:var(--banner);border-radius:18px 18px 48px 48px;
+  min-height:400px;padding:16px 26px 34px;display:flex;flex-direction:column}
+.banner::before{content:"";position:absolute;inset:0;background:rgba(0,0,0,.22);z-index:1;pointer-events:none}
+.bn{position:relative;z-index:3}
+.bn nav a{color:#d7e0ff}
+.pill{display:inline-flex;align-items:center;gap:10px;background:#fff;color:var(--ink);font-weight:600;font-size:.9rem;
+  text-decoration:none;border-radius:999px;padding:4px 4px 4px 16px}
+.pill i{width:26px;height:26px;border-radius:50%;background:var(--violet);display:block}
+.stage{position:relative;z-index:2;flex:1;display:grid;grid-template-columns:1.7fr 1fr;align-items:center;gap:24px;margin-top:20px}
+.hey{font-size:1.05rem;font-weight:500;color:#d7e0ff}
+.big{display:grid;grid-template-columns:auto auto auto;column-gap:.25em;justify-content:start;align-items:stretch;
+  font:800 clamp(1.5rem,4.2vw,2.7rem)/1.02 var(--display);letter-spacing:-.03em;margin-top:8px;color:#fff}
+.w1{grid-area:1/1;justify-self:center;text-align:center}
+.w2{grid-area:2/1;justify-self:center;text-align:center}
+.brace{grid-area:1/2/3/3;width:.5em;height:100%;display:block}
+.brace path{fill:none;stroke:var(--cyan);stroke-width:4;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.devword{grid-area:1/3/3/4;align-self:center}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.r h2{font:800 1.2rem/1.3 var(--display);max-width:18ch;color:#fff}
+.r p{color:#e8eeff;max-width:34ch;margin-top:10px;font-size:.9rem}
+.cta{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.portrait{position:absolute;left:72%;bottom:0;transform:translateX(-50%);width:min(300px,36%);z-index:0}
+.portrait svg{display:block;width:100%;height:auto}
+
+/* buttons */
+.btn{font:600 .9rem var(--body);text-decoration:none;border-radius:10px;padding:8px 15px;border:1px solid var(--cyan);
+  cursor:pointer;color:var(--ink);background:var(--cyan)}
+.btn:hover{background:#8be3ff;border-color:#8be3ff}
+.btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.45)}
+.btn.ghost:hover{background:rgba(255,255,255,.14);border-color:#fff}
+
+/* sections */
+section{padding:28px 0}
+h2{font:800 1.6rem var(--display);letter-spacing:-.015em}
+.sub{color:var(--muted);margin:2px 0 16px}
+
+.filters{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+.chip{font:600 .9rem var(--body);color:var(--muted);background:var(--navy);border:1px solid var(--line);
+  padding:6px 14px;border-radius:999px;cursor:pointer}
+.chip:hover{color:#fff;border-color:var(--violet)}
+.chip[aria-pressed="true"]{background:var(--violet);border-color:var(--violet);color:#fff}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.card{background:var(--navy);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.cover{height:118px;position:relative;display:grid;place-items:center;background:var(--c1)}
+.cover span{font:800 1.3rem var(--display);padding:0 14px;text-align:center;color:#fff}
+.vn{--c1:#4a2fb5;--tag:var(--vn)}
+.rpg{--c1:#a2492a;--tag:var(--rpg)}
+.simple{--c1:#1d5fb8;--tag:var(--simple)}
+.web{--c1:#0f5f8f;--tag:#5cd6ff}
+.card.dev{--c1:#6d3bb0;--tag:#d9a6ff}
+.util{--c1:#8a3b6e;--tag:#ff9ecb}
+.body{padding:14px 16px 16px;display:flex;flex-direction:column;gap:8px;flex:1}
+.tag{align-self:flex-start;font-size:.78rem;font-weight:600;color:var(--tag);border:1px solid var(--tag);border-radius:999px;padding:0 10px}
+.card h3{font:800 1.1rem var(--display)}
+.card p{color:var(--muted);font-size:.9rem}
+.actions{margin-top:auto;padding-top:6px}
+
+/* expandable about */
+.acc{display:grid;gap:10px}
+details{background:var(--navy);border:1px solid var(--line);border-radius:12px}
+summary{cursor:pointer;list-style:none;padding:13px 18px;font:800 1rem var(--display);display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font-size:1.4rem;color:var(--cyan);transition:transform .2s}
+details[open] summary::after{transform:rotate(45deg)}
+details[open]{border-color:var(--violet)}
+.panel{padding:0 18px 16px;color:var(--muted);max-width:68ch}
+.panel ul{padding-left:20px;display:grid;gap:6px}
+.skills{display:flex;flex-wrap:wrap;gap:8px;list-style:none;padding:0!important}
+.skills li{background:var(--panel);color:var(--ice);border-radius:8px;padding:3px 12px;font-size:.88rem}
+.panel a{color:var(--cyan)}
+footer{border-top:1px solid var(--line);margin-top:20px;padding:22px 0;color:var(--muted);font-size:.85rem}
+
+@media (max-width:760px){
+  .portrait{display:none}
+  .bn nav{margin-left:-12px}
+  .stage{grid-template-columns:1fr}
+  .banner{min-height:0;padding:16px 18px 30px;border-radius:16px 16px 36px 36px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header id="dock">
+  <div class="wrap">
+    <a class="logo" href="#top">Mark Paulo Realin</a>
+    <nav aria-label="Main">
+      <a href="#games">Games</a>
+            <a href="#tools">Tools</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="top">
+  <div class="wrap">
+    <div class="hero">
+      <div class="banner">
+        <div class="bn">
+          <a class="logo" href="#top">Mark Paulo Realin</a>
+          <nav aria-label="Intro">
+            <a href="#games">Games</a>
+            <a href="#tools">Tools</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+          </nav>
+          <a class="pill" href="#contact">Get in touch <i></i></a>
+        </div>
+        <div class="stage">
+          <div class="l">
+            <div class="hey">Hey, I'm Mark Paulo Realin, a</div>
+            <h1 class="big">
+              <span class="w1">Game &amp;</span>
+              <span class="w2">Full Stack</span>
+              <svg class="brace" viewBox="0 0 20 100" preserveAspectRatio="none" aria-hidden="true"><path d="M2 2Q10 2 10 14V40Q10 50 18 50Q10 50 10 60V86Q10 98 2 98"/></svg>
+              <span class="devword">Developer</span>
+            </h1>
+          </div>
+          <div class="r">
+            <h2>Games you can play in one click.</h2>
+            <p>Placeholder: I make visual novels, RPGs and small games with Godot, and build full-stack web apps. Every game below runs in your browser, no download needed.</p>
+            <div class="cta">
+              <a class="btn" href="#games">Play my games</a>
+              <a class="btn ghost" href="#about">More about me</a>
+            </div>
+          </div>
+        </div>
+        <!-- Portrait placeholder: swap this SVG for <img src="me.png" alt="Mark Paulo Realin"> -->
+        <div class="portrait" aria-hidden="true">
+          <svg viewBox="0 0 300 360"><circle cx="150" cy="180" r="140" fill="#6d5bf7"/><circle cx="150" cy="140" r="52" fill="#060b24"/><path d="M40 360C40 262 92 216 150 216s110 46 110 144z" fill="#060b24"/></svg>
+        </div>
+      </div>
+    </div>
+
+    <section id="games" aria-labelledby="gh">
+      <h2 id="gh">My games</h2>
+      <p class="sub">Filter by genre, then press Play.</p>
+      <div class="filters" role="group" aria-label="Filter by genre">
+        <button class="chip" data-f="all" aria-pressed="true">All</button>
+        <button class="chip" data-f="vn" aria-pressed="false">Visual novels</button>
+        <button class="chip" data-f="rpg" aria-pressed="false">RPGs</button>
+        <button class="chip" data-f="simple" aria-pressed="false">Simple games</button>
+      </div>
+      <div class="grid" id="grid"></div>
+    </section>
+
+    <section id="tools" aria-labelledby="th">
+      <h2 id="th">My tools</h2>
+      <p class="sub">Filter by type, then press Launch.</p>
+      <div class="filters" role="group" aria-label="Filter by type">
+        <button class="chip" data-f="all" aria-pressed="true">All</button>
+        <button class="chip" data-f="web" aria-pressed="false">Web apps</button>
+        <button class="chip" data-f="dev" aria-pressed="false">Dev tools</button>
+        <button class="chip" data-f="util" aria-pressed="false">Utilities</button>
+      </div>
+      <div class="grid" id="tgrid"></div>
+    </section>
+
+    <section id="about" aria-labelledby="ah">
+      <h2 id="ah">About me</h2>
+      <p class="sub">Open any section to read more.</p>
+      <div class="acc">
+        <details open>
+          <summary>Who I am</summary>
+          <div class="panel"><p>Placeholder: Write a short introduction here. Say where you are from, what got you into making games, and what kind of stories or mechanics you enjoy most.</p></div>
+        </details>
+        <details>
+          <summary>Skills and tools</summary>
+          <div class="panel">
+            <ul class="skills">
+              <li>Godot</li><li>GDScript</li><li>Full-stack development</li><li>Game design</li><li>Pixel art</li><li>Storytelling</li><li>Git and GitHub</li>
+            </ul>
+          </div>
+        </details>
+        <details>
+          <summary>Experience and journey</summary>
+          <div class="panel"><ul>
+            <li>Placeholder: Year, project or role, and one line about what you did.</li>
+            <li>Placeholder: Game jam, course, or first published game.</li>
+            <li>Placeholder: What you are working on now.</li>
+          </ul></div>
+        </details>
+        <details>
+          <summary>Education and awards</summary>
+          <div class="panel"><p>Placeholder: Add your school, certificates, or game jam results here.</p></div>
+        </details>
+      </div>
+    </section>
+
+    <section id="contact" aria-labelledby="ch">
+      <h2 id="ch">Contact</h2>
+      <p class="sub">Placeholder links. Replace them with your own.</p>
+      <div class="acc">
+        <details>
+          <summary>Get in touch</summary>
+          <div class="panel"><ul>
+            <li>Email: <a href="mailto:you@example.com">you@example.com</a></li>
+            <li>GitHub: <a href="https://github.com/yourusername">github.com/yourusername</a></li>
+            <li>itch.io: <a href="https://yourusername.itch.io">yourusername.itch.io</a></li>
+          </ul></div>
+        </details>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer><div class="wrap">&copy; <span id="yr"></span> Mark Paulo Realin. Built with HTML, CSS and a little JavaScript.</div></footer>
+
+<script src="games.js"></script>
+<script>
+/* EDIT THIS LIST to add your tools.
+   genre: "web" | "dev" | "util"
+   path:  folder or link of the tool, e.g. tools/my-tool/ */
+const TOOLS = [
+  {title:"Task Board", genre:"web", path:"tools/task-board/", short:"A simple full-stack task tracker with accounts."},
+  {title:"Dialogue Editor", genre:"dev", path:"tools/dialogue-editor/", short:"Write and preview branching visual novel dialogue."},
+  {title:"Save File Viewer", genre:"dev", path:"tools/save-viewer/", short:"Inspect and edit JSON save files from your games."},
+  {title:"Palette Picker", genre:"util", path:"tools/palette-picker/", short:"Build color palettes for game art and UI."}
+];
+const LABEL = {vn:"Visual novel", rpg:"RPG", simple:"Simple game", web:"Web app", dev:"Dev tool", util:"Utility"};
+
+function build(items, el, cta, f){
+  el.innerHTML = "";
+  items.filter(g => f === "all" || g.genre === f).forEach(g => {
+    const c = document.createElement("article");
+    c.className = "card " + g.genre;
+    c.innerHTML =
+      '<div class="cover"><span></span></div>' +
+      '<div class="body"><span class="tag"></span><h3></h3><p></p>' +
+      '<div class="actions"><a class="btn"></a></div></div>';
+    c.querySelector(".cover span").textContent = g.title;
+    c.querySelector(".tag").textContent = LABEL[g.genre];
+    c.querySelector("h3").textContent = g.title;
+    c.querySelector("p").textContent = g.short;
+    const a = c.querySelector("a.btn");
+    a.href = g.path || "play.html?game=" + encodeURIComponent(g.slug); a.textContent = cta;
+    el.appendChild(c);
+  });
+}
+function wire(section, items, el, cta){
+  const chips = document.querySelectorAll(section + " .chip");
+  chips.forEach(ch => ch.onclick = () => {
+    chips.forEach(x => x.setAttribute("aria-pressed", x === ch));
+    build(items, el, cta, ch.dataset.f);
+  });
+  build(items, el, cta, "all");
+}
+wire("#games", GAMES, document.getElementById("grid"), "Play");
+wire("#tools", TOOLS, document.getElementById("tgrid"), "Launch");
+document.getElementById("yr").textContent = new Date().getFullYear();
+
+const dock = document.getElementById("dock"), ban = document.querySelector(".banner");
+const tog = () => dock.classList.toggle("on", ban.getBoundingClientRect().bottom < 0);
+addEventListener("scroll", tog, {passive:true}); tog();
+</script>
+</body>
+</html>
