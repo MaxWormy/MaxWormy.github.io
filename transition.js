@@ -2,7 +2,7 @@
    Add <script src="transition.js"></script> in the <head> of every page. */
 (function () {
   var reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  var MIN_SHOW = reduce ? 0 : 500;   // shortest time the loading screen stays up (ms)
+  var MIN_SHOW = reduce ? 0 : 750;   // shortest time the loading screen stays up (ms)
   var started = Date.now();
 
   var css = document.createElement("style");
